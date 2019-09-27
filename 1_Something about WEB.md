@@ -1,5 +1,7 @@
-## JS中一些关于字符串的知识
->在JS中所有由单引号或者双引号包起来的都是字符串，每个字符串都是由零或多个字符组成
+### JS中一些关于字符串的知识
+
+在JS中所有由单引号或者双引号包起来的都是字符串，每个字符串都是由零或多个字符组成
+
 ````javascript
 var str="hlx";
 str.length->字符串长度
@@ -1658,9 +1660,7 @@ xxx.style.color='red'：把xxx元素对象对应堆内存中的style属性下的
 
 appendChild在追加元素对象的时候，如果这个元素之前容器中已经存在，此时不是克隆一份新的再追加到末尾，而是把原有的元素移动到末尾位置
 
-
-
-#### LESS
+### LESS
 
 它是css的预编译语言，和他类似的还有sass/stylus...
 
@@ -1683,7 +1683,1004 @@ css是标记语言，不是编程语言；而less就是让css具备面向对象�
 
 	> 项目上线，不能把less部署，这样用户每一次打开页面都需要重新的编译，非常耗性能，，我们部署到服务器上的是编译后的css
 
+-------------------------------
 
+定时器：设定一个定时器，并且设定了等到的时间，当到达指定的事件，浏览器会把对应的方法执行
+
+[常用定时器]
+
+​	setTimeout([function],[interval]) 	//只执行一次
+
+​	setInterval([function],[interval])	//轮循定时器，每间隔一段时间都会把方法执行
+
+​		[function]：到达时间后执行的方法（设置定时器的时候方法没有执行，到达指定时间浏览器帮我们执行）
+
+​		[interval]：时间因子，需要等待的时间
+
+定时器需要手动删除，clearTimeout/clearInterval：这两个方法中的任意一个，都可以清除用任何方法创建的定时器
+
+1.设置定时器会有一个返回值，这个只是一个数字，属于定时器的编号，代表当前是第几个定时器，这个编号会累加
+
+2.clearTimeout([序号])/clearInterval([序号])
+
+**JS中的同步编程和异步编程**
+
+​	同步编程：任务是按照顺序依次处理，当前这件事没有彻底做完，下一件事是执行不了的
+
+​	异步编程：当前这件事没有彻底做完，需要等待一段时间才能继续处理，此时我们不等，继续执行下面的任务，当后面的任务完成后，再去吧没有彻底完成的事情完成
+
+​	[JS中的异步编程]
+
+​		1.所有的事件绑定都是异步编程。 xxx.onclick=function(){}
+
+​		2.所有定时器都是异步编程。	setTimeout(function(){},1000)
+
+​		3.AJAX中一般都使用异步编程处理
+
+​		4.回调函数也算是异步编程
+
+-----------------------------
+
+### 事件
+
+1.什么是事件？
+
+​	一个事情或者一个行为，对于页面元素来说，它的很多事件都是天生附带的，只要我们去操作这个元素，就会触发这些行为
+
+“事件就是天生自带的行为，我们操作元素，就会触发相关的实践行为”
+
+2.事件绑定：给天生自带的行为绑定方法，当事件触发，会把对应的方法执行（eg：oBox.onclick=function(){}）
+
+3.元素天生自带的事件
+
+[鼠标事件]
+
+​	click：点击（pc端是点击，移动端是单击[移动端使用会有300ms 的延迟]）
+
+​	dblclick：双击
+
+​	mouseover：鼠标经过
+
+​	mouseout：鼠标移出
+
+​	mouseenter：鼠标进入
+
+​	mouseleave：鼠标离开
+
+​	mousemove：鼠标移动
+
+​	mousedown：鼠标按下（鼠标左右键都触发，按下即触发）
+
+​	mouseup：鼠标抬起（会先触发down和up才触发click）	
+
+​	mousewheel：鼠标滚轮滚动
+
+**mouseenter和mouseover的区别？**
+
+1.over属于滑过（覆盖）事件，从父元素进入到子元素，属于离开了父元素，会触发父元素的out，触发了元素的over
+
+​	enter属于进入，从父元素进入子元素，并不打算离开父元素，不会触发父元素的leave，触发子元素的enter
+
+2.enter和leave阻止了事件的冒泡传播，而over和out还存在冒泡传播的
+
+所以对于父元素的嵌套子元素这种情况，使用over会发生很多不愿意操作的事情，此时我们使用enter会更加简单，操作方便，所以真实项目中enter的使用会比over多
+
+[键盘事件]
+
+​	keydown，keyup，keypress
+
+[表单元素常用事件]
+
+​	focus：获取焦点
+
+​	blur：失去焦点
+
+​	change：内容改变
+
+[其他常用事件]
+
+​	load：加载完成
+
+​	unlod,beforeunload,
+
+​	scroll：滚动条滚动事件
+
+​	resize：大小改变事件 window.onresize=function(){}当浏览器窗口大小发生改变
+
+[移动端手指事件]
+
+​	touch:
+
+​		touchstart:手指按下
+
+​		touchmove：手指移动
+
+​		touchend：手指离开
+
+​		touchcancel：因为意外情况导致手指操作取消
+
+​	gesture：
+
+​		gesturestart：手指按下
+
+​		gesturechange：手指改变
+
+​		gestureend：手指离开
+
+[H5中的AUDIO/VIDEO音频事件]
+
+​	canplay：可以播放（播放过程中可能出现由于资源没有加载完成，导致的卡顿）
+
+​	canplaythrough：资源加载完成，可以正常无障碍播放
+
+
+
+#### 事件绑定
+
+[DOM0级事件绑定]
+
+​	[element].onXXX=function(){}
+
+[DOM2级事件绑定]
+
+​	[element].addEventListener(‘XXX’,function(){},false);
+
+​	[element].attachEvent('XXX',function(){}); [IE6~8]
+
+目的：给当前元素的某个事件绑定方法（不管是基于DOM0还是DOM2），都是为了触发元素的相关行为的时候，能做点事情（也就是把绑定的方法执行）：“不仅把方法执行了，而且浏览器还给方法传递了一个实参信息值==>这个值就是事件对象”
+
+```javascript
+box.onclick=function(ev){
+    //定义一个形参接收方法执行的时候，浏览器传递的信息值(事件对象：mouseevent鼠标事件对象，KeyboardEvent键盘事件对象，Event普通事件对象)
+    //事件对象中记录了很多属性名和属性值，这些信息中包含了当前操作的基础信息，例如：鼠标点击位置的X/Y轴坐标，鼠标点击的是谁（事件源）等信息
+    /*[mouseEvent]
+     * ev.target:事件源（操作的是哪一个元素）
+     * ev.clientX/ev.clientY:当前鼠标触发点距离当前窗口左上角的X/Y轴坐标
+     * ev.pageX/ev.pageY:当前鼠标触发点距离BODY（第一屏幕）左上角的X/Y轴坐标
+     * ev.preventDefault():阻止默认行为
+     * ev.stopPropagation():阻止事件的冒泡传播
+     * ev.type:当前事件类型
+     *[KeyboardEvent]
+     * ev.code:当前按键‘keyE’
+     * ev.key:当前按键‘e’
+     * ev.which/ev.keyCode:当前按键的键盘码
+     * let code=ev.which||ev.keyCode；
+     *=>常用的键盘码
+     * 左-上-右-下：37-38-39-40
+     * Backspace：8
+     * Enter:13
+     * space:32
+     * Delete:46
+     * Shift；16
+     * Alt:18
+     * Ctrl:17
+     * ESC:27
+     * F1~F12:112~123
+     * 数字键：48~57
+     * 小写字母：65~90
+    */
+}
+```
+
+**事件的默认行为**：事件本身就是天生就有的，某些时间触发，即使你没有绑定方法，也会存在一些效果，这些默认效果就是“事件的默认行为”
+
+​	A标签的点击操作就存在默认行为
+
+​		1.页面跳转
+
+​		2.锚点定位（HASH定位（哈希定位））（基于HASH值我们还可以实现SPA单页面应用）
+
+​	INPUT标签也有默认行为
+
+​		1.输入内容可以呈现到文本框中
+
+​		2.输入内容的时候会把之前输入的一些信息呈现出来（并不是所有情况下都有）
+
+​	SUBMIT按钮也有默认行为
+
+**阻止默认行为**：
+
+​	1.阻止a标签的默认行为：很多时候我们使用a标签并不需要其跳转，仅仅是一个按钮，点击实现功能，也不想锚点定位
+
+​	在结构中阻止：
+
+```javascript
+<a href="javascript:;">hlx </a>
+```
+
+​	在JS中可以阻止：给其cllick事件绑定方法，当我们点击A标签的时候，先触发click事件，其次才会执行自己的默认行为
+
+**事件的传播机制**
+
+​	冒泡传播：出发当前元素的某一个事件（点击事件）行为，不仅当前元素事件行为触发，而且其祖先元素的相关事件行为也会依次被处罚，这种机制就是“事件的冒泡传播机制”(按照HTML的结构而传播，和页面中的位置无关)
+
+​	1.捕获阶段
+
+​		当你点击的时候，首先会从最外层开始向内查找（找到操作的事件源），查找的目的是，构建出冒泡传播阶段需要传播的路线（查找就是按照HTML层级结构找的）
+
+​	2.目标阶段
+
+​		把事件源的相关操作行为触发（如果绑定了方法，则把方法执行）
+
+​	3.冒泡传播
+
+​		把当前事件源的祖先元素，按照捕获阶段规划的路线，自内而外，把当前事件源的祖先元素的相关事件行为触发（如果某一个祖先元素事件行为绑定了方法，则执行方法，没绑定方法，则行为触发了，什么都不做，继续向上传播即可）
+
+xxx.onxxx=function(){} DOM0事件绑定，给元素的事件行为绑定方法，这些方法都是在当前元素事件行为的冒泡阶段（或者目标阶段）执行的
+
+xxx.addEventListener('xxx',function(){},false) 第三个参数false也是控制绑定的方法在事件传播的冒泡阶段（或者目标阶段）执行；只有第三个参数为true才代表让当前方法在事件传播的捕获阶段触发执行（这种捕获阶段执行没啥实际意义，项目中不用）
+
+#### 事件委托（事件代理）
+
+利用事件的冒泡传播机制，如果一个容器的后代元素中，很多元素的点击行为（其它事件行为也是）都要做一些处理，此时不需要再向以前一样一个个获取一个个绑定了，我们只需要给容器的click绑定方法即可，这样不管点击的是哪一个后代元素，都会根据冒泡传播的传递机制，把容器的click行为触发，把对应的方法执行，根据事件源，我们都可以知道点击的是谁，从而做不同的事情即可。
+
+--------------------------------------
+
+### 响应式布局
+
+ **一、viewport视口**
+
+​		在pc端，我们开发的html页面运行在浏览器中，浏览器有多宽（一般浏览器代表设备的宽度）html就有多宽，也就是在浏览器宽度的视口中渲染和呈现我们的页面
+
+​		移动端和PC端区别：不管移动端设备（代指打开的浏览器）的宽度是多少，HTML页面宽度是980（或者1024）=>导致的问题：如果在设备窗口想要把整个页面呈现出来（小窗口中完全展示大页面），我们只能把大页面进行缩放，HTML页面缩放了，那么页面中所有内容都缩放了
+
+​	【解决方案】
+
+​		只要让H5页面的宽度和手机设备的宽度保持一致即可，就不会出现手机渲染页面的时候把页面缩放的事情了
+
+```html
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+这个meta标签就是在设置VP（视口）的规则
+	<!-- width=device-width 让HTML的宽度等于设备的宽度
+	initial-scale：1.0  初始缩放比例是1:1（也就是既不放大也不缩小）
+	user-scalable=no 禁止用户手动缩放
+	maximum-scale=1.0 设置最大缩放比例为1:1
+	minimum-scale=1.0 设置最小缩放比例为1:1（计步放大也不缩小=>部分安卓手机中设置user-scalable是不起作用的，需要这两个一起使用）
+	....
+	-->
+```
+
+    layout viewport:布局（页面）视口（和开发css等相关）
+
+​	visual viewport：手机视口
+
+​	ideal viewport：理想视口
+
+​	真实的移动端项目开发中，一般是不会出现横向滚动条的，想让他不出现横向滚动条就要保证内容的宽度不超过HTML的页面宽度
+
+​	移动端开发手机设备宽度不一定->HTML页面的宽度也不一定->所以内容的宽度一般也是不固定的（也就是所谓的百分比宽度）
+
+​		移动端开发：外层盒子的宽度一般都是百分比设定的，很少有固定值的（里面具体的小元素可以固定）
+
+**二、平时处理的移动端项目**
+
+​	`1.PC端和移动端共用一套项目的（结构相对简单的：一般都是展示类的企业站）`
+
+​		【设计师一般只给一套设计稿】
+
+​		A：先做PC端（设计给的设计稿一般都是给PC端的）
+
+​			一般宽度都是自适应的（具体情况有所不同）
+
+​		B：切换到手机端，使用@media（媒体查询）把不同设备上不合适的样式进行修改
+
+​			我们可以吧@media理解为JS中的条件判断：在不同条件中使用不同的css样式进行渲染
+
+​			@media[媒体设备]
+
+​					all->所有设备
+
+​					screen->所有屏幕设备
+
+​					print->所有打印机设备
+
+​					....
+
+​			@media[媒体设备] and [媒体条件] and [媒体条件] .....
+
+​	`2.PC端和移动端是分开的两套不同的项目`
+
+​		【设计师一般会给两套设计稿（PC+移动）】
+
+​		=>PC端单独做（做的时候不需要考虑移动端响应式）
+
+​			固定布局
+
+​		=>移动端单独做（只需要考虑移动端响应式适配即可）
+
+​			响应式布局
+
+​				A.依然可以基于@media来处理（麻烦一些）
+
+​				B.固定布局（viewport=>width=320px）：按照设计稿把320尺寸的写好即可（所有的尺寸都可以固定，而且都是设计稿的一半【因为设计稿都是大一倍的】），在其它设备上，让320的页面居中展示即可
+
+​				C.scale等比缩放布局（严格按照设计稿的尺寸来写样式【没有啥自适应宽度，都是固定值】，在其它设备上，首先获取设备的宽度，让其除以设计稿的宽度，然后让原始写好的页面按照这个比例整体缩小即可）transform-origin：left top =>控制最终缩放的时候：不是从中心点缩放，而是从左上角  、、=>会导致一些问题列入字体模糊...
+
+​				D.REM等比缩放：参考scale，只是使用rem单位来实现等比缩放（严格按照设计稿的尺寸编写【但是一般宽度让他自适应】，其余的值可以写成固定值->在编写css样式的时候，我们把所有的px单位都换算成REM单位->当加载页面的时候，根据当前设备的尺寸除以设计稿，根据比例动态调整REM和PX的换算比例）
+
+​	**REM**是相对单位，相对于根元素（HTML标签）的字体大小设定的单位
+
+​				E:CSS3中提供了flex-box伸缩盒子模型，基于这个属性，可以让某些效果处理起来更加的方便
+
+-----------------------
+
+
+
+### 一、HTML5（H5）
+
+**1.新增加(修改/删除)的语义化标签**
+  header
+  footer
+  main 主体
+  section 区域
+  article 文章区域
+  aside 与内容无关的部分（例如：广告）
+  nav
+  figure 配图区域
+  figcaption 配图说明
+
+  mark 标记
+  time 时间标记
+  progress 进度条
+  ...
+
+**2.关于表单元素的新改革**
+ [传统表单元素]
+    input:text/password/radio/checkbox/file/hidden/button/submit/reset...
+    select
+    textarea 文本域
+    button
+    form
+    label
+    ...
+
+ [新增一些表单元素或者是表单类型]
+    input:search/email/tel/number/range/color/date/time/url...
+
+**3.音视频标签**
+  audio
+
+​	 关于AUDIO的一些常用属性
+
+​     [属性]
+
+​     duration:播放的总时间(S)
+
+​     currentTime:当前已经播放的时间(S)
+
+​     ended:是否已经播放完成
+
+​     paused:当前是否为暂停状态
+
+​    volume:控制音量 (0~1)
+
+ 
+
+​     [方法]
+
+​     pause() 暂停
+
+​     play() 播放
+
+ 
+
+​     [事件]
+
+​     canplay：可以正常播放（但是播放过程中可能出现卡顿）
+
+   canplaythrough：资源加载完毕，可以顺畅的播放了
+
+​     ended：播放完成
+
+​     loadedmetadata：资源的基础信息已经加载完成
+
+​     loadeddata：整个资源都加载完成
+
+​     pause:触发了暂停
+
+​     play:触发了播放
+
+​     playing:正在播放中
+
+  video
+  =>让我们告别了FLASH时代
+
+**4.canvas图形绘制**
+
+**5.提供了一些新的API**
+  本地存储：localStorage/sessionStorge
+  获取地理位置： navigator.geolocation.getCurrentPosition 调取手机内部的GPS定位系统获取当前手机所在地的经纬度以及精准度等
+  ...
+  还提供了一些API，让我们可以通过浏览器调取手机内部的软件或者硬件（但是性能都不咋高，而且兼容性不是特别好）
+
+6.websocket：socket.io 客户端和服务器端新的传输方式（即时通讯IM系统基本上很多是基于它完成的）
+
+...
+
+
+
+### 二、CSS3
+
+  学习一些样式属性和选择器就差不多了
+
+  [选择器]
+    #ID
+    .CLASS
+    TAG
+    *
+    SELECTOR1,SELECTOR1... 群组选择器
+
+```
+A .B{} 后代
+A.B{} 既具备A也具备.B的（同级二次筛选）
+A>B{} 子代
+A+B{} 下一个弟弟
+A~B{} 兄弟
+
+A[NAME=''] 属性选择器 NAME!='' / NAME^='' / NAME$='' / NAME*='' ...
+
+A:HOVER
+A:ACTIVE
+A:VISTED
+A:AFTER
+A:BEFORE
+
+A:NTH-CHILD
+A:NTH-LAST-CHILD
+A:NTH-OF-TYPE
+A:NTH-LAST-OF-TYPE
+A:NOT
+A:FIRST-CHILD
+A:LAST-CHILD
+
+...
+```
+
+  [样式属性]
+    1.基本常用的
+      border-radius
+      box-shadow
+      text-shadow
+
+```
+2.背景的
+  background -color / -image / -position / -repeat / -attachment / ...
+
+  background-size：
+       100px 100px  宽高具体值
+       100% 100%  宽高百分比（相对于所在容器）
+       cover  以合适的比例把图片进行缩放(不会变形)，用来覆盖整个容器
+       contain 背景图覆盖整个容器（但是会出现，如果一边碰到容器的边缘，则停止覆盖，导致部分区域是没有背景图的）
+       ...
+
+  background-clip: 背景图片裁切
+      border-box
+      padding-box
+      content-box
+
+  background-origin：设置背景图的起始点
+      border-box
+      padding-box
+      content-box
+
+  ...
+
+  filter
+
+3.CSS3动画和变形(2D/3D)
+
+  //=>变形不是动画
+  transform:
+     translate(X|Y|Z)  位移
+     scale 缩放
+     rotate 旋转
+     skew 倾斜
+     matrix 矩阵(按照自己设定的矩阵公式实现变形)
+  transform-style:preserve-3d 实现3D变形
+  transform-origin：变形的起点
+
+  //=>过渡动画
+  transition:
+     transition-property:all/width... 哪些属性样式发生改变执行过渡动画效果，默认ALL，所有样式属性改变都会执行这个过渡效果
+     transition-duration:过渡动画的时间，我们一把都用秒，例如：.5s
+     transition-timing-function:动画运动的方式 linear(默认) ease ease-in ease-out ease-in-out cubic-bezier(执行自己设定的贝塞尔曲线)
+     transition-delay:设置延迟的时间,默认是0s不延迟,立即执行动画
+     ...
+
+  //=>帧动画
+  animation：
+     animation-name 运动轨迹的名称
+     animation-duration 运动的时长
+     animation-timing-function 运动的方式(默认ease)
+     animation-delay 延迟时间
+     animation-iteration-count 运动次数(默认1  infinite无限次运动)
+     animation-fill-mode 运动完成后的状态（帧动画完成后，元素会默认回到运动的起始位置，如果想让其停留在最后一帧的位置，设置这个属性值为forwards；backwards是当前帧动画如果有延迟时间，在延迟等待时间内，元素处于帧动画的第一帧位置；both是让帧动画同时具备forwards和backwards）
+     ...
+
+  //=>设置帧动画的运动轨迹
+  @keyframes [运动轨迹名称] {
+    from{
+       //开始的样式
+    }
+    to{
+       //结束的样式
+    }
+  }
+
+  @keyframes [运动轨迹名称] {
+     0%{
+        //开始的样式
+     }
+     50%{}
+     100%{
+        //结束的样式
+     }
+  }
+
+4.CSS3中的新盒子模型
+  box-sizing: border-box / padding-box / content-box（默认值） 改变的就是我们在CSS中设置的WIDTH/HEIGHT到底代表啥  border-box让其代表整个盒子的宽高，当我们去修改PADDING或者BORDER，盒子大小不变，只会让内容缩放
+
+  columns：多列布局
+
+  flex：弹性盒子模型
+
+5.一些其它的CSS3属性
+  perspective:视距 实现3D动画必用的属性
+  @media:媒体查询 实现响应式布局的一种方案
+  @font-face:导入字体图标
+  ...
+```
+
+### 三、响应式布局开发
+
+   响应式布局：在不同尺寸的设备上都能良好的展示，这就是响应式布局设计（Responsive Layout）
+
+   公司中的产品形态：
+     1.PC端(全屏页面需要宽度自适应，但是一般都是固定宽度的)
+     2.PC+移动端用同一套项目（简单的页面，例如：产品介绍，公司展示类的官网等）
+     3.移动端（移动端设备尺寸差异较大，需要做响应式布局开发）
+       嵌入到APP中的H5
+       微信中分享出来的H5
+       微信公号
+       小程序
+       靠浏览器访问的H5
+       ...
+     4.RN(React Native) / ionic / cordova ... JS开发APP的框架，使用JS代码开发APP，最后框架会把代码转换为 安卓和IOS 需要的代码
+
+   如何实现响应式布局开发?
+     最常用的方案：REM等比缩放响应式布局
+
+```
+ 做移动端H5开发，首先加META标签
+    <!--meta:vp [Tab]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    REM和PX一样都是样式单位，PX是固定单位，REM是相对单位（相对于当前页面根元素HTML的字体设定的单位）
+
+    我们开始给HTML的字体大小设置为100PX(1REM=100PX)，接下来我们写样式的时候，把所有的尺寸都用REM设定（测量出来的PX值/100就是应该设置的REM的值）,如果HTML的FONT-SIZE不变，用REM和PX一样，但是如果字体大小改变，也就是改变了REM和PX之间的换换算比例，那么之前所有用REM做单位的样式都会自动按照最新的比例进行缩放（实现了改动HTML的FONT-SIZE，整个页面中的元素都跟着缩放了，牵一发而动全身）
+
+    真实项目中，设计师给给我们一套设计稿（常用的尺寸：640*1136  750*1334 640*960 ...），拿到设计稿后，我们严格按照设计稿中的尺寸去编写样式
+       HTML{
+          FONT-SIZE:100PX;
+       }
+       接下来写样式，把测量出来的PX都除以100变为REM，所有的单位基于REM来搞
+       =>假设设计稿是750,也就相当于750的设备下,1REM=100PX
+
+    我们页面运行在320的设备上，我们需要修改HTML的字体大小，以此实现页面跟着整体缩放：320/750*100 =>当前设备上HTML的字体大小
+```
+
+
+
+### 四、微信二次开发（小程序） =>Hybrid混合APP开发
+
+​	Hybrid混合APP开发
+
+1.前端做的都是H5页面  WebApp
+  ->运行在浏览器中
+  ->移动端不仅可以运行在浏览器中，还可以运行在 APP 中（例如：微信、自己公司的APP中）
+
+  [优点]
+    及时更新（不需要用户选择，我们只需要把服务器上的源文件更新，用户访问的永远是最新的）
+    跨平台
+
+  [弊端]
+    不是直接运行在操作系统中的吗，是运行在浏览器或者APP中的，所以不能直接的操作手机上的软硬件（运作模式：H5通知浏览器或者APP我们想做什么 -> 浏览器调取手机的软硬件 ->浏览器把信息返回给H5）
+    性能没有APP好
+    ...
+
+2.APP不是H5，它是原生的应用 NativeApp
+  ->IOS: object-c / swift  (需要C的功底)
+  ->安卓：java-native   (需要JAVA功底)
+
+ [优点]
+   用户把安装包下载到手机上进行安装，后期程序是直接运行在手机操作系统中的
+     A:性能高
+     B:可以调取手机内置的软件或者硬件（例如：调取摄像头、重力感应器、通讯录等）[前提用户需要同意才可以]
+
+ [弊端]
+   不能跨平台，一款产品需要两个团队开发两套不同的安装包
+     A:成本大
+     B:版本不统一
+   不能及时更新
+   苹果商店上传一款APP需要7天审核周期
+
+3.Hybrid混合开发模式
+  把传统IOS和安卓开发与H5开发结合在一起来做（微信公众号开发：把我们做的H5运行在微信APP中）
+
+4.ReactNative ionic 微信小程序 ...
+
+
+
+### 五、移动端事件
+
+### 六、移动端常用的插件、类库、框架等
+
+-------------------------------
+
+### JS中this汇总
+
+**JS中的this汇总**
+
+this：当前方法执行的主体，（谁执行的这个方法，那么this就是谁，所以this和当前方法在哪创建或者在哪执行都没有必然的关系）
+
+​	1.给元素的某个事件绑定方法，方法中的this都是当前操作的元素本身
+
+```javascript
+document.body.onclick=function(){
+    //this:body
+}
+```
+
+​	2.函数执行，看函数前面是否有点，有的话，点前面是谁this就是谁，没有点，this就是window（在JS的严格模式下，没有点就是undefined）
+
+```javascript
+let fn=function(){
+    console.log(this.name);
+};
+let obj={
+    name:'haha',
+    fn:fn
+}
+fn();	//this:window
+obj.fn();	//this:obj
+```
+
+​	3.构造函数执行，方法中的this一般都是当前类的实例
+
+```javascript
+let fn=function(){
+    this.x=100;//this:fn
+};
+let f=new fn;
+```
+
+​	4.箭头函数中没有自己的this，则this是上下文中的this
+
+```javascript
+let obj={
+    fn:function(){
+        //this:obj
+        setTimeout(()=>{
+            //this:obj
+        },1000);
+    }
+};
+obj.fn();
+```
+
+​	5.在小括号表达式中，会影响this的指向
+
+```javascript
+let obj={
+    fn:function(){
+        console.log(this);
+    }
+};
+obj.fn(); //this :obj
+(12,obj.fn)();	//this :window
+```
+
+​	6.使用call、apply、bind可以改变this的指向
+
+```javascript
+fn.call(obj);//this:obj
+fn.call(12);//this:12
+fn.call();	//this:window  在非严格模式下call、apply、bind第一个参数不写或者写null和undefined，this都是window，在严格模式下写谁就是谁，不写是undefined
+```
+
+
+
+-----------------------
+
+### JS盒子模型属性
+
+​	=>在JS中通过相关的属性可以获取（设置）元素的样式信息，这些属性就是盒子模型属性（基本上都是有关于样式的）
+
+​	**client**（top/left/height/width）
+
+​		1.clientWidth & clientHeight：获取当前可视区域的宽高（内容的宽高+左右/上下padding），和内容有溢出无关和是否设置了overflow：hidden也无关，就是我们设定的内容的宽高+padding。（如果没有设置高度，则会以内容的高度+padding为准）
+
+​		获取当前页面的可视区域宽度和高度:
+
+```javascript
+document.documentElement.clientWidth||document.body.clientWidth   document.documentElement.clientHeight||document.body.clientHeight
+```
+
+​		2.clientTop & cliientLeft ：获取（上/左）边框的宽度
+
+```javascript
+xxx.clientTop
+xxx.cliientLeft
+```
+
+​	**offset**（top/left/height/width/parent）
+
+​		1.在client的基础上加上border（和内容是否溢出也没有关系）
+
+```javascript
+xxx.offsetWidth
+xxx.offsetHeight
+```
+
+​		2.offsetLeft & offsetTop:获取当前盒子距离其父级参照物的偏移量（左偏移/上偏移）
+
+```javascript
+xxx.offsetLeft
+xxx.offsetTop
+```
+
+​		3.offsetParent：获取当前盒子的父级参照物
+
+```javascript
+xxx.offsetParent
+```
+
+​			参照物：同一平面中，元素的父级参照物和他的结构没有必然的关系，默认他们的参照物都是body（当前平面最外层的盒子） BODY的父级参照物是null
+
+​			参照物可以改变：构建出不同的平面即可（使用zindex，但是这个属性只对定位有作用），所以改变元素的定位（position：relative/absolute/fixed）可以改变其父级参照物
+
+**scroll**  (top/left/heigt/width)
+
+​		1.scrollWidth & scrollHeight ：真实内容的宽高（不一定是自己设定的值，因为可能存在内容溢出，溢出的内容也要算上）+左/上padding（没有内容溢出和client一样）在不同的浏览器中，或者是否设置了overflow：hidden都会对最后的结果产生影响，所以这个值仅作参考。
+
+​		2.scrollTop/scrollLeft：滚动条卷去的宽度或者高度
+
+​			最小卷去值：0
+
+​			最大卷去值：document.docunmentElement.scrollTop-document.documentElement.clientHeight
+
+```javascript
+document.docunmentElement.scrollTop
+```
+
+
+
+
+
+------
+
+**通过JS盒模型属性获取值的特点**
+
+1.获取的都是数字不带单位
+
+2.获取的都是整数，不会出现小数（一般都是四舍五入，尤其是获取的偏移量）
+
+3.获取的结果都是复合样式值（好几个元素的样式组合在一起的值），如果只想获取单一样式值（例如：只想获取padding，我们的盒子模型属性就操作不了了（这不嫩能说没有用，真实项目中，有的时候我们就需要获取组合的值来完成一些操作）
+
+**获取元素具体的某个样式**
+
+1.[元素].style.xxx 操作获取
+
+​	只能获取所有写在元素行内上的样式（不写在行内上，不管你有没有写都获取不到，真实项目中我们很少会把样式写在行内上）
+
+=>outer.style.width =>''(width是写在样式表中的)
+
+2.获取当前元素所有经过浏览器计算的样式
+
+​	经过计算的样式：只要当前元素可以在页面中呈现（或者浏览器渲染他了），那么他的样式都是被计算过的。不管当前样式写在哪，不管你是否写了（浏览器会给元素设置一些默认样式）
+
+// 标准浏览器（IE9+）
+
+​	window.getComputedStyle([元素],[伪类，一般都写null]),获取到当前元素所有被浏览器计算过的样式（对象）
+
+```javascript
+window.getComputedStyle(outer,null).width
+```
+
+//IE6-8
+
+​	[元素].currentStyle 获取经过计算的样式
+
+封装一个方法快速获取当前css某一个样式的属性值
+
+```javascript
+let getCss =function(curEle,attr){
+    let val=null;
+    if(typeof window.getComputedStyle ==='undefined'){
+        return;
+    }
+    let val=window.getComputedStyle(curEle,null)[attr];
+    let reg=/^-?\d+(\.\d+)?(px|rem|em|pt)?$/i
+    reg.test(val)?val=parseFloat(val):null;
+    return val
+};
+onsole.log(getCss(outer,'border'));
+```
+
+设置当前元素的某一个具体样式的属性值
+
+```javascript
+let setCss=function(curEle,attr,value){
+     /*
+     * 细节处理
+     *   1.如果需要考虑IE6~8兼容，透明度这个样式在低版本浏览器中不是使用opacity，而是filter（我们两套都要设置）
+     *   2.如果传递进来的VALUE值没有带单位,我们根据情况设置PX单位
+     *     ->某些样式属性才会加单位：WIDTH/HEIGHT/PADDING(LEFT...)/MARGIN(LEFT...)/FONT-SIZE/TOP/LEFT/BOTTOM/RIGHT...
+     *     ->用户自己传递的VALUE值中是没有单位的
+     */
+    if(attr=='opacity'){
+        curEle.style.opacity=value;
+        curEle.style.filter='alpha(opacity=${value *100})';
+        return;
+    }
+    if(!isNaN(value)){
+        //=>IS-NaN检测的结果是FALSE：说明VALUE是纯数字没单位
+        let reg = /^(width|height|fontSize|((margin|padding)?(top|left|right|bottom)?))$/i;
+        reg.test(attr) ? value += 'px' : null;
+    }
+    curEle['style'][attr] = value;
+}
+
+```
+
+批量设置样式的属性值
+
+```javascript
+let setGroupCss=function(curEle,option={}){
+    //=>遍历传递的OPTIONS,有多少键值对,就循环多少次,每一次都调取SET-CSS方法逐一设置即可
+    for (let attr in options) {
+        if (!options.hasOwnProperty(attr)) break;
+        //=>options:传递进来的需要修改的样式对象(集合)
+        //=>attr:每一次遍历到的集合中的某一项(要操作的样式属性名)
+        //=>options[attr]:传递的要操作的样式属性值
+        setCss(curEle, attr, options[attr]);
+    }
+}
+setGroupCss(outer,{
+    width:600px;
+})
+
+```
+
+*FOR-IN循环只遍历当前对象可枚举（可遍历）的属性*
+
+​	1.对象的私有属性(自己写的)是可枚举的
+
+​    2.浏览器内置的属性一般都是不可枚举的
+
+​    3.自己在类的原型上设置的属性也是可枚举的,FOR-IN循环的时候也会被遍历出来（一般情况下我们是不想遍历到原型上的公有属性的）
+
+
+
+
+
+### 实例：跑马灯
+
+js
+
+```javascript
+/* js中的定时器
+setInterval(()=>{},1000); */
+let wrapper = document.querySelector('ul');
+/*为了实现无缝，将元素克隆一份放到末尾 */
+/* let wrapperList=wrapper.querySelectorAll('li');
+let frg=document.createDocumentFragment();  //创建一个文档碎片，防止文档回流
+[].forEach.call(wrapperList,(item)=>{  //遍历每一项，并且将其克隆并添加到创建的文档碎片中
+    frg.appendChild(item.cloneNode(true));
+});
+wrapper.appendChild(frg);
+frg=null; */
+
+wrapper.innerHTML += wrapper.innerHTML; //简单的实现克隆，因为wrapper.innerHTML存储的就是那几个标签
+
+utils.css(wrapper, 'width', utils.css(wrapper, 'width') * 2);//修改wrapper的宽度
+
+setInterval(() => {
+    //获取当前wrapper的left值,减去步长，赋值给元素即可
+    let curl = utils.css(wrapper, 'left');
+    curl += -1;
+    utils.css(wrapper, {
+        left: curl
+    });
+    //实现无缝：当我们UL距离marqueeBox的左偏移已经是整个wrapper的一半宽度，此时让wrapper立马移动到left=0的时候
+    if(Math.abs(wrapper.offsetLeft)>=utils.css(wrapper,'width')/2){
+        utils.css(wrapper,'left',0);
+    }
+}, 14);
+
+```
+
+html
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../../reset.min.css">
+    <title>跑马灯</title>
+    <!-- <style>
+        marquee{
+            display: block;
+            margin: 20px auto;
+            height: 30px;
+            width: 600px;
+            line-height: 30px;
+            background-color: lightblue;
+        }
+    </style> -->
+    <style>
+        .marqueeBox{
+            position: relative;
+            margin: 30px auto;
+            height: 100px;
+            width: 500px;
+            border: 1px solid green;
+            overflow: hidden;
+        }
+        .wrapper{
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 900px;
+            height: 100px;
+        }
+        .wrapper li{
+            float: left;
+            width: 100px;
+            height: 100px;
+            line-height: 100px;
+            text-align: center;
+            font-size: 20px;
+        }
+        .wrapper li:nth-child(3n+3){
+            background-color: aqua;
+        }
+        .wrapper li:nth-child(3n+2){
+            background-color:lightblue;
+        }
+        .wrapper li:nth-child(3n+1){
+            background-color: lightgreen;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 很早以前使用marquee实现跑马灯，无法实现无缝连接，开始显示内容的时候有空白，性能消耗大 -->
+    <!-- <marquee behavior="" direction="">大苏打交换机法国海军撒谎附件是快递发货集合发动机哈卡大家分厘卡大家粉红色的金卡八年发表电视阿布发货VS的环境发v不合适v的给VS大部分健康不健康的吧</marquee> -->
+    <div class="marqueeBox">
+        <ul class="wrapper">
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>4</li>
+            <li>5</li>
+            <li>6</li>
+            <li>7</li>
+            <li>8</li>
+            <li>9</li>
+        </ul>
+    </div>
+    <script src="../../utils.js"></script>
+    <script src="../js/跑马灯.js"></script>
+</body>
+
+</html>
+
+```
 
 
 

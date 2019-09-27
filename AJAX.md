@@ -170,3 +170,122 @@ xhr.open('GET',`/temp/list?lx=1000&_=${Math.random()}`);
 
 ​	xhr.setRequestHeader()	设置请求头
 
+### 练习题
+
+```javascript
+let xhr= new XMLHttpRequest();
+xhr.open('GET','/temp/list',true);//异步操作
+xhr.onreadystatechange=()=>{    //=>监听的是AJAX状态‘改变’事件：设置监听之前有一个状态，当后续的状态和设置之前的状态不相同，才会触发这个事件
+	if(xhr.readyState===2){
+		console.log(1);
+    }
+    if(xhr.readyState==44){
+        console.log(2);
+    }
+};
+xhr.send(); //发送AJAX请求，这个执行才证明AJAX任务开始
+console.log(3);
+//输出3,1,2
+```
+
+===基于服务器时间做倒计时===
+
+JS中也可以获取时间：“new Data()”获取的客户端时间，这个时间客户端可以任意修改，所以在项目中，如果时间作为重要的参考标准，需要使用服务器时间
+
+
+
+### JQ中的AJAX方法
+
+```javascript
+$.ajax({
+    url:'',
+    method:'',
+    data:,
+    dataType:'json',
+    async:true,
+    cache:true,
+    success:()=>{
+    
+	},
+    error:()=>{
+        
+    }
+})
+```
+
+**url**：请求的API接口地址
+
+**method**：请求的方式
+
+**data**：传输给服务器的信息可以放到data中
+
+​	如果是GET请求基于问号传递过去
+
+​	如果是POST请求是基于请求主体传递过去的
+
+​	DATA的值可以是对象也可以是字符串（一般常用对象）
+
+​		如果是对象类型，JQ会把对象转换为xxx=xxx&xxx=xxx的模式（x-www-form-urlencoded）
+
+**dataType**：预设置获取结果的数据格式text、json、jsonp、html、script....（服务器返回给客户端的响应主体中的内容一般都是字符串【json格式居多】），而设置dataType=‘json’，JQ会内部把获取的字符串转换为json格式的对象=>‘他不会影响服务器的返回结果，只是把返回的结果进行了二次处理’
+
+**async**：设置同步或者异步（true是异步，false是同步）
+
+**cache**：设置GET请求下是否建立缓存（默认true建立缓存，false不建立缓存），当我们设置的是false，并且当前是get请求，JQ会在末尾追加随机数
+
+**success**：回调函数，当ajax请求成功执行
+
+**error**：请求失败后执行的回调函数
+
+
+
+### promise
+
+promise是ES6中新增加的内置类：目的是为了管理异步操作的
+
+- new Promise()创建类的一个实例，每一个实例都可以管理一个异步操作
+
+	- 必须传递一个回调函数进去（回调函数中管理你的异步操作），不传递会报错
+
+	-  回调函数中有两个参数
+
+		- resolve：异步操作成功做的事情（代指成功后的事件队列=>成功后要做的所有事情都存放到成功这个事件队列中）
+
+		- reject：异步操作失败做的事情（代指失败后的事情队列）
+
+	- new Promise的时候立即把回调函数执行了（Promise是同步的）
+
+- 基于Promise.prototype.then方法（还有catch、finally两个方法）向成功队列和失败队列中依次加入需要处理的事情
+
+
+
+
+
+
+
+```javascript
+let promise1 = new Promise((resolve,reject)=>{
+   $.ajax({
+       url: 'json/data.json',
+       success:(result)=>{
+           resolve(result);
+       },
+       error:(msg)=>{
+           reject(msg);
+       }
+   }); 
+});
+promise1.then(
+	result=>{
+	
+    },
+    msg=>{
+        
+    }
+);
+
+```
+
+
+
+​		
