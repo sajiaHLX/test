@@ -288,4 +288,69 @@ npm view xxx> xxx.version.txt 查看模块的历史版本
 			});
 			```
 
-			
+
+**URL内置模块**
+
+- url.parse(url,[flag])：把一个url地址进行解析，把地址中的每一部分按照对象键值对的方式存储起来。第二个参数是false，设置为true可以把问号传参的部分也解析成为对象键值对的方式
+
+- ```javascript
+	let url = require('url');
+	//不加true
+	var no1 = url.parse('http://www.baidu.com/main/guide/index.html?from=qq&lx=stu#video');
+	console.log(no1);
+	/* Url {
+	  protocol: 'http:', 				=>协议
+	  slashes: true,					=>是否有双斜线
+	  auth: null,						=>作者
+	  host: 'www.baidu.com',			=>域名+端口
+	  port: null,						=>端口
+	  hostname: 'www.baidu.com',		=>域名
+	  hash: '#video',					=>哈希值
+	  search: '?from=qq&lx=stu',		=>问号传参
+	  query: 'from=qq&lx=stu',			=>问号传递的参数，不包含问号
+	  pathname: '/main/guide/index.html',=>请求资源的路径名称
+	  path: '/main/guide/index.html?from=qq&lx=stu',
+	  href: 'http://www.baidu.com/main/guide/index.html?from=qq&lx=stu#video'
+	} */
+	//加true
+	var no1 = url.parse('http://www.baidu.com/main/guide/index.html?from=qq&lx=stu#video',true);
+	/*
+	query: [Object: null prototype] { from: 'qq', lx: 'stu' },加和不加的区别就在于query中
+	*/
+	```
+
+**HTTP内置模块**
+
+```javascript
+let server = http.createServer();	//创建服务
+server.listen();					//监听窗口
+```
+
+注意：基于node创建后台程序，我们一般都会创建一个server模块，在模块中实现创建web服务，和对于请求的处理（并且我们一般都会把server模块放到当前项目的根目录下）
+
+简单的监听应用
+
+```javascript
+let http =require('http'),
+    url = require('url'),
+    path=require('path'),
+    fs=require('fs');
+let port=8686; 		//监听8686端口
+let handle=function handle(req,res){
+    //req：request请求对象，包含了客户端请求的信息
+    //req.url存储的是
+    //req.method 客户端请求的方式
+    //res:reponse 响应对象，包含了一些属性和方法，可以让服务器端返回内容
+   	//res.write 基于这个方法，服务器端可以向客户端返回内容
+    //res.end 结束响应
+    //res.writeHead 重写响应头信息
+    let {url,method}=req;
+    console.log(url,method);
+    res.writeHead(200,{'content-type':'text/plain;charset=utf-8;'});
+    res.end(JSON.stringify({name:'哈哈哈'}));//服务器端返回给客户端的内容一般是string或者buffer格式的数据
+};
+http.createServer(handle).listen(port,()=>{
+    console.log(`server is success，listen on ${port}!`);
+});
+```
+
