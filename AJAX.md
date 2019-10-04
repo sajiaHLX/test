@@ -243,6 +243,28 @@ $.ajax({
 
 promise是ES6中新增加的内置类：目的是为了管理异步操作的
 
+```javascript
+new Promise((resolve,reject)=>{
+    //resolve,reject:是任意执行的，但是大家都约定成功执行resolve，失败执行reject
+    //Excutor函数（执行函数）中可以不管控异步操作（但是不管控异步操作没啥意义）
+    resolve();
+}).then(result=>{
+    //resolve执行的时候会触发第一个回调函数执行
+    console.log(1);
+    return 100;//会把这个值传递给下一个then中的方法，如果返回的是一个新的promise实例，则等到promise处理完成，把处理完成的结果传递给下一个then
+},reason=>{
+    //reject执行的时候会触发第二个回调函数执行
+    console.log(2);
+}).then(result=>{//需要保证执行then方法返回的依旧是promise实例这样才可以实现链式调用
+    //上一个then中管控的两个方法只要任何一个执行不报错，我们都会执行这个then中的第一个方法，如果执行报错，会执行此then中的第二个方法
+}).catch(reson=>{
+    //catch就相当于then(null,reason=>{})
+});
+//等待所有的promise都成功执行then，反之只要有一个失败就执行catch
+Promise.all([primose1,...]).then();
+
+```
+
 - new Promise()创建类的一个实例，每一个实例都可以管理一个异步操作
 
 	- 必须传递一个回调函数进去（回调函数中管理你的异步操作），不传递会报错
@@ -256,12 +278,6 @@ promise是ES6中新增加的内置类：目的是为了管理异步操作的
 	- new Promise的时候立即把回调函数执行了（Promise是同步的）
 
 - 基于Promise.prototype.then方法（还有catch、finally两个方法）向成功队列和失败队列中依次加入需要处理的事情
-
-
-
-
-
-
 
 ```javascript
 let promise1 = new Promise((resolve,reject)=>{

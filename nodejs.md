@@ -370,3 +370,29 @@ server.js
 - API接口的请求处理：想要数据
 
 	区别：第一类请求的地址中有后缀名，第二类没有后缀   
+
+
+
+**NODE中独有的异步操作API**
+
+- sestImmediate它也是定时器，但是它不设置时间，但是它也是异步编程（宏任务)
+
+	```javascript
+	setImmediate(()=>{	
+	
+	},10);
+	```
+
+- process.nextTick：把当前任务放到主栈的最后执行（当主栈执行完，先执行nextTick，再到等待队列中）
+
+	```javascript
+	process.nextTick(()=>{
+	});
+	```
+
+- process.env.NODE_ENV ：全局环境变量
+
+	- 用途：真实项目中，我们项目基于webpack打包配置的时候，往往需要区分不同环境下的不同操作，例如有 开发环境，测试环境，生产环境....而我们一般都是基于环境变量来区分打包配置的！
+
+### Express：node.js web应用框架
+
