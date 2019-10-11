@@ -396,3 +396,52 @@ server.js
 
 ### Express：node.js web应用框架
 
+```javascript
+let express=require('express'),
+    app=express(),
+    port=8686;
+
+//创建服务和监听端口两件事都处理了,并且有请求过来执行的是app这个方法
+app.listen(port,()=>{
+    console.log(`sever is success,listen on ${port}!`);
+});
+
+//静态资源文件处理
+app.use(express.static('./static'));
+
+//API处理
+app.get('/getUser',(req,res)=>{
+    res.send({
+        /*
+         *当客户端向服务器发送请求,如果请求方式是GET，请求路径是'/getUser',就会把回调函数触发执行，里面有三个参数req/res/next
+         *REQ:request（他不是我们之前原生node中的req，他是espress框架封装处理的，但是也是存储了很多客户端传递信息的对象）
+         *	req.params 存储的是路径参数信息
+         * 	req.path 请求路劲的名称
+         *  req.query 请求的问号参数的信息（get请求都是这样传递信息的）（对象）
+         *	req.body 请求的方式是post，我们基于body-parser中间件处理后，会把客户端请求主体中传递的内容存放到body属性上
+         * 	req.session 当我们基于express-session中间件处理后，会把session操作放到这个属性上，基于这个属性可以操作session信息
+         * 	req.cookies 当我们基于cookie-parser中间件处理后，会把客户端传递的cookie信息存放到这个属性上
+         *	req.get() 获取指定请求头的信息
+         *	req.param() 基于这个方法可以把url-encoded格式字符串（或者路径参数）中的某一个属性名对应的信息获取到
+         *  req.response 也不是原生中的res，也是经过express封装处理的，目的是为了提供一些属性和方法，可以供服务器端向客户端返回内容
+         *	res.cookie() 通过此方法可以设置一些cookie信息，通过响应头set-cookie返回给客户端，客户端把返回的cookie信息种到本地
+         *	res.type() 设置响应内容的MIME类型
+         *	res.status() 设置响应状态码
+         *	res.send-status() 设置返回的状态码
+         * 	res.json() 向客户端返回json格式的字符串，允许我们传递json对象，方法会帮我们转换为字符串然后返回（执行此方法后会自动结束响应，也就是自动执行res.end）
+         *	res.send-file（[path]） 首先把path指定的文件夹中内容得到，然后把内容返回给客户端浏览器（完成了文件的读取和响应两步操作），也会自动结束响应
+         * 	res.send（） 自己设置返回的东西，也会自动结束响应
+         *	res.redirect（）响应是冲定向的（状态码302）
+         *	res.render() 服务器渲染的时候才会使用
+        */
+        message:'ok'
+    });
+});
+
+app.post('/register',(req,res) =>{
+    //get请求，接收问号传参的信息，可以使用：req.query/req.param()
+    //post请求，接收请求主体传递的信息，此时我们需要使用一个中间件（body-parser）
+})
+
+```
+
