@@ -46,7 +46,7 @@ options中可以包含很多的选项：https://cn.vuejs.org/v2/api/
 
 	- 类型：{[key：string]：Function}
 
-	- 作用：计算属性
+	- 作用：计算属性，一般没有set方法，只有get方法（只读属性）
 
 	- ```html
 		computed: {
@@ -54,6 +54,15 @@ options中可以包含很多的选项：https://cn.vuejs.org/v2/api/
 		          return this.first+' '+this.last;
 		        }
 		      },
+		<!--计算属性的本质
+		computed: {
+			fullName:{
+		        get:function(){
+		          return this.first+' '+this.last;
+		        }
+		      }
+			},
+		-->
 		```
 
 ### 插值的操作
@@ -140,30 +149,32 @@ options中可以包含很多的选项：https://cn.vuejs.org/v2/api/
 
 - **v-bind(绑定属性)**
 
-	- 有些内容和属性需要动态绑定，比如a的href属性，img的src属性
+  - 缩写：**：**
 
-	- ```html
-		<img v-bind:src="imgUrl" alt="">
-		<img :src="imgUrl" alt=""> <!--简写(语法糖)-->
-		```
+  - 有些内容和属性需要动态绑定，比如a的href属性，img的src属性
 
-	- 绑定class有两种方式：
+  - ```html
+    <img v-bind:src="imgUrl" alt="">
+    <img :src="imgUrl" alt=""> <!--简写(语法糖)-->
+    ```
 
-		- 对象语法
+  - 绑定class有两种方式：
 
-			- ```html
-				用法一：直接通过{}绑定一个类
-				<h2 :class="{'active':isactive}"></h2>
-				用法二：通过判断传入多个值
-				<h2 :class="{'active':isactive,'line':isLine}"></h2>
-				用法三：和普通的类同时存在
-				<h2 class="title" :class="{'active':isactive}"></h2>
-				用法四：如果类过于复杂，可以放在一个methods或者computed中
-				注：classes是一个计算属性
-				<h2 class="title" :class="classes"></h2>
-				```
+    - 对象语法
 
-		- 数组语法
+    	- ```html
+    		用法一：直接通过{}绑定一个类
+    		<h2 :class="{'active':isactive}"></h2>
+    		用法二：通过判断传入多个值
+    		<h2 :class="{'active':isactive,'line':isLine}"></h2>
+    		用法三：和普通的类同时存在
+    		<h2 class="title" :class="{'active':isactive}"></h2>
+    		用法四：如果类过于复杂，可以放在一个methods或者computed中
+    		注：classes是一个计算属性
+    		<h2 class="title" :class="classes"></h2>
+    		```
+
+    - 数组语法
 
 - **v-bind(绑定style)**
 
@@ -173,3 +184,70 @@ options中可以包含很多的选项：https://cn.vuejs.org/v2/api/
 		finalSize当做一个变量使用
 		<h2 :style="{fontSize: finalSize + 'px'}"></h2>
 		```
+	
+- **v-if**
+
+	- ```html
+		<h2 v-if="isShow">{{message}}</h2>通过控制isShow来判断是否显示message
+		```
+
+- **v-if和v-else**
+
+	- ```html
+		<h2 v-if="isShow">{{message}}</h2>
+		<h2 v-else>{{message1}}</h2>
+		```
+
+- **v-if和v-else-if和v-else**
+
+	- ```html
+		<h2 v-if="score>=90">优秀</h2>
+		<h2 v-else-if="score>=80">良好</h2>
+		<h2 v-else>舒服</h2>
+		```
+
+### 事件监听
+
+- **v-on**
+
+	- 缩写：@
+
+	- ```html
+		<button @click="">+</button>
+		```
+
+	- 参数：如果该方法不需要额外的参数，那么方法后的()不用添加（但是方法本身需要一个参数，但是将括号省略了，那么会默认将原生事件event参数传递进去），如果需要也可以使用$event传递原生事件。
+
+- 修饰符
+
+	- .stop：调用event.stopPropagation()
+
+		```html
+		<button @click.stop='btn1click'>按钮1</button>
+		```
+
+	- .prevent：调用event.preventDefault()，阻止事件的默认行为
+
+		```html
+		<a href="http://www.baidu.com" @click.prevent>aaa</a>
+		```
+
+	- .{keyCode|keyAlias}：只当事件是从特定键触发时才触发回调
+
+		```html
+		<input type="text" @keyup='keyup'>监听键帽
+		<input type="text" @keyup.enter='keyup'>监听回车键（键别名）
+		<input type="text" @keyup.13='keyup'>监听键代码
+		```
+
+	- .native：监听组件根元素的原生事件
+
+	- .once：只触发一次回调
+
+		```html
+		<button @click.once="onceClick">an</button>
+		```
+
+		
+
+		
