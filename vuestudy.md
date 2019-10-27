@@ -1,5 +1,23 @@
 ### 创建Vue实例传入的OPTIONS
 
+#### 注意事项
+
+- vue中存在一个内部复用的问题，比如下面的input标签，如果用户在input中输入了值，再去点切换，那么input中用户的输入不会被去掉。如果不想要这个内部复用，则需要给两个input加上不同的key属性。
+
+	```html
+	<span v-if="isUser">
+	    <label for="username">账号登录：</label>
+	    <input type="text" placeholder="用户账号登录" id="username">
+	</span>
+	<span v-else>
+	    <label for="email">邮箱登录：</label>
+	    <input type="text" placeholder="用户邮箱登录" id="email">
+	</span>
+	<button @click="user()">账号/邮箱登录</button>
+	```
+
+	
+
 options中可以包含很多的选项：https://cn.vuejs.org/v2/api/
 
 目前掌握的：
@@ -205,6 +223,107 @@ options中可以包含很多的选项：https://cn.vuejs.org/v2/api/
 		<h2 v-else-if="score>=80">良好</h2>
 		<h2 v-else>舒服</h2>
 		```
+	
+- **v-show**
+
+	- 和v-if类似都是判断是否显示信息
+	- 与v-if的不同处：
+		- v-if：当条件为false时，包含v-if指令的元素，根本就不会存在dom中，当条件为true时，会重新创建一个元素
+		- v-show：当条件为false时，v-show只是给元素添加了一个行内样式：display：none
+	- 如何选择v-if和v-show：
+		- 如果需要在显示和不显示之间切换频率很高使用v-show，否则使用v-if
+
+- **v-for**
+
+	- 不需要索引值
+
+		```html
+		<li v-for="item in names">{{item}}</li>
+		```
+
+	- 需要索引值
+
+		```html
+		<li v-for="(item,index) in names">{{index+item}}</li>
+		```
+
+	- 获取对象的value
+
+		```html
+		<li v-for="value in hlx">{{value}}</li>
+		```
+
+	- 获取对象的value和key
+
+		```html
+		<li v-for="(value,key) in hlx">{{key}}:{{value}}</li>
+		```
+
+	- 获取对象的value和key和索引值
+
+		```html
+		<li v-for="(value,key,index) in hlx">{{key}}:{{value}}:{{index}}</li>
+		```
+
+		**响应式的数组方法**
+
+		```javascript
+		1.push：向数组末尾添加元素
+			this.names.push('aaa','bbb');
+		2.pop：删除数组末尾的元素
+			this.names.pop()
+		3.shift：删除数组的第一个元素
+			this.names.shift();
+		4.unshift：向数组的开始添加元素
+			this.names.unshift('aaa','bbb');
+		5.splice：删除元素、插入元素、替换元素
+			this.names.splice(1,1);
+		    this.names.splice(1,0,'aaa','bbb')
+		    this.names.splice(1,1,'aaa')
+		6.sort：为数组排序
+			this.names.sort()
+		7.reverse：为数组倒序
+			this.names.reverse();
+		```
+
+		**不是响应式的**
+
+		```javascript
+		通过索引修改数组中的元素
+			this.names[1]='abccc';
+		```
+
+- **v-model表单绑定**
+
+	- 表单控件在实际开发中非常常见，特别是对于用户信息的提交，需要大量的表单，Vue中使用v-model指令来实现表单元素和数据的双向绑定
+
+		```html
+		<input type="text" v-model="message">
+		```
+
+	- **修饰符**
+
+		- lazy修饰符
+
+			- 默认情况下，v-model默认是在input事件中同步输入框数据的，也就是说，一旦有数据发生改变对应的data中的数据就会改变
+
+			- lazy修饰符可以让数据在失去焦点或者回车时才更新
+
+				```html
+				<input type="text" v-model.lazy="message">
+				```
+
+				
+
+		- number修饰符
+
+			- 默认情况下，在输入框中无论我们输入的是数字还是字母，都会被当做字符串来处理
+			- number修饰符可以让在输入框中输入的内容自动转换成数字类型
+
+		- trim修饰符
+
+			- 如果输入的内容收尾有很多空格，通常我们希望将它去除
+			- trim可以过滤内容给左右两边的空格
 
 ### 事件监听
 
@@ -248,6 +367,105 @@ options中可以包含很多的选项：https://cn.vuejs.org/v2/api/
 		<button @click.once="onceClick">an</button>
 		```
 
-		
 
-		
+### 组件化开发
+
+- 第一步创建组件构造器
+
+	```html
+	const componentName = Vue.extend({
+		template:``
+	})
+	```
+
+- 第二步注册组件
+
+	- 全局组件（可以在多个Vue实例中使用）
+
+		```html
+		Vue.component('mycpn(调用时的组件名)',componentName)
+		```
+
+	- 局部组件
+
+		```html
+		const app = new Vue({
+			el: '#app',
+			data: {
+				message:'i love code'
+			},
+			components: {
+				mycpn:cpn
+			},
+		})
+		```
+
+- 第三步使用组件
+
+	```html
+	<mycpn></mycpn>
+	```
+
+- 父子组件
+
+	```html
+	const cpn1（子组件，只能在cpn2中使用）=Vue.extend({
+		template:`
+	        <div>
+	            <h2>我是测试1</h2>
+	            <p>我是小测试1</p>
+	            <p>我是小测试1</p>
+	        </div>`
+	})
+	const cpn2(父组件)=Vue.extend({
+		template:`
+			<div>
+	    		<h2>我是测试2</h2>
+	   	 		<p>我是小测试2</p>
+	    		<p>我是小测试2</p>
+	    		<cpn1></cpn1>
+			</div>
+		`,
+		components:{
+			cpn1:cpn1
+		}
+	})
+	```
+
+- 语法糖
+
+	- 全局组件
+
+	```html
+	Vue.component('cpn3',{
+	    template:`
+	        <div>
+	            <h2>我是测试3</h2>
+	            <p>我是小测试3</p>
+	            <p>我是小测试3</p>
+	        </div>`
+	})
+	```
+
+	- 局部组件
+
+	```html
+	const app = new Vue({
+	    el: '#app',
+	    data: {
+	    	message:'i love code'
+	    },
+	    components:{
+	        cpn1:{
+	            template:`
+	            <div>
+	                <h2>我是测试1</h2>
+	                <p>我是小测试1</p>
+	                <p>我是小测试1</p>
+	            </div>`
+	        }
+	    } 
+	})
+	```
+
+	
