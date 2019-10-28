@@ -367,8 +367,9 @@ options中可以包含很多的选项：https://cn.vuejs.org/v2/api/
 		<button @click.once="onceClick">an</button>
 		```
 
-
 ### 组件化开发
+
+- 组件不可以访问Vue实例数据，组件是一个单独的模块的封装，这个组件有属于自己的HTML模板，也有自己的数据data
 
 - 第一步创建组件构造器
 
@@ -468,4 +469,66 @@ options中可以包含很多的选项：https://cn.vuejs.org/v2/api/
 	})
 	```
 
+	```html
+	可以将template中的内容放在一个template标签中，然后在注册组件时通过id调用
+	<template id="cpn" name="component-name">
+	    <div>
+	      <h2>{{cmovies}}</h2>
+	      <ul>
+	        <li v-for="item in cmovies" >{{item}}</li>
+	      </ul>
+	      <p>{{cmessage}}</p>
+	    </div>
+	</template>
+	const app = new Vue({
+	    el: '#app',
+	    data: {
+	        message:'i love code',
+	    },
+	    components: {
+	        cpn:{
+	          template:'#cpn',
+	        }
+		}
+	}
 	
+	```
+	
+	
+
+#### 父子组件的通信
+
+- 子组件中无法引用父组件或者vue实例的数据的，但是在开发中有一些数据需要从上层传递到下层，比如我么请求了很多数据，其中一部分大组件使用，有些则需要子组件进行展示，所以就需要父组件把这些数据传递给小组件
+
+- **通过props向子组件传递数据**
+
+	- ```javascript
+		props: {
+		    // 方法1.限制数据的属性
+		    cmovies:Array,
+		
+		    //方法2.限制数据的属性（type）和默认值（default），以及是否必须（required）
+		    cmessage: {
+		        type: String,
+		        default: 'aaa',
+		        required:true
+		    },
+		    cmovies:{
+		        type:Array,
+		        default:[]
+		    }
+		}
+		```
+
+- **通过事件向父组件发送消息**
+
+	- ```html
+		在子组件中，通过$emit()来触发事件，
+		btnclick(item) {
+		    // console.log(item);
+		    //发出事件
+		    this.$emit('itemclick',item)
+		},
+		在父组件中，通过v-on来监听子组件事件。
+		<cpn @itemclick="cpnclick"></cpn>
+		```
