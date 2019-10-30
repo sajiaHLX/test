@@ -524,11 +524,133 @@ options中可以包含很多的选项：https://cn.vuejs.org/v2/api/
 
 	- ```html
 		在子组件中，通过$emit()来触发事件，
-		btnclick(item) {
-		    // console.log(item);
 		    //发出事件
 		    this.$emit('itemclick',item)
-		},
 		在父组件中，通过v-on来监听子组件事件。
 		<cpn @itemclick="cpnclick"></cpn>
 		```
+
+### 父子组件的访问方式：
+
+- 有时候我们需要直接访问而不是通过传数据
+
+	- 父组件访问子组件：使用$children或者$refs
+
+	- ```javascript
+		//$children获取的是一个数组，它包含了所有的子组件
+		this.$children[0].showmessage();
+		console.log(this.$children[0].name);   
+		//$refs=>是对象类型，默认是一个空对象,需要在自定义的标签上添加ref="aaa"
+		<cpn ref="aaa"></cpn>
+		、、、、、
+		this.$refs.aaa
+		```
+
+	- 子组件访问父组件：是用$parent
+
+	- ```javascript
+		//访问父组件
+		this.$parent
+		//访问根组件
+		this.$root
+		```
+
+### slot插槽
+
+- 组件的插槽让我们封装的组件更具有扩展性，让使用者决定组件内部的一些内容到底展示什么，如果在自定义标签中有多个值，那么插槽会全部接受，一起作为替换元素
+
+	- ```html
+		<cpn><button>按钮</button></cpn>
+		<template id="cpn" name="component-name">
+		    <div>
+		      <h2>我是组件</h2>
+		      <p>我是p标签</p>
+		      <slot></slot>
+		    </div>
+		</template>
+		```
+
+- 插槽中也可以有一个默认值
+
+	- ```html
+		<slot><button>按钮</button></slot>
+		```
+
+- 具名插槽
+
+	- ```html
+		<div id="app">
+		    <cpn><button slot="left">将左边替换为按钮</button></cpn>
+		</div>
+		<template id="cpn" name="component-name">
+		    <div>
+		      <slot name="left"><span>左边</span></slot>
+		      <slot name="center"><span>中间</span></slot>
+		      <slot name="right"><span>右边</span></slot>
+		      <slot>hahahh </slot>
+		    </div>
+		</template>
+		```
+
+### 编译作用域
+
+- 父组件模板的所有东西都会在父级作用域内编译，子组件模板的所有东西都会在子级作用域内编译
+
+- ```html
+	<div id="app">
+	    <cpn v-show="isshow"></cpn>
+	  </div>
+	  <template id="cpn" name="component-name">
+	    <div>
+	      <h2>我是谁</h2>
+	    </div>
+	  </template>
+	  <script src="js/vue.js"></script>
+	  <script>
+	    const app = new Vue({
+	      el: '#app',
+	      data: {
+	        message:'i love code'
+	      },
+	      data:{
+	        isshow:true
+	      },
+	      components: {
+	        cpn:{
+	          template:'#cpn',
+	          data() {
+	            return {
+	              isshow: false
+	            }
+	          },
+	        }
+	      },
+	    })
+	</script>
+	```
+
+### 作用域插槽
+
+- 由子组件提供内容，让父组件选择标签来展示
+
+	- ```html
+		子组件中slot的属性  :dataname(随意取名)="(要传给父组件的数据)"
+		<template id="cpn" name="component-name">
+		    <div>
+		      <slot :dataname="pLanguages">
+		          <ul>
+		              <li v-for="item in pLanguages">{{item}}</li>
+		          </ul>
+		      </slot>
+		    </div>
+		</template>
+		在父组件中通过 slot-scope="(在父组件中使用的变量名)"获取到子组件传递的数据
+		<div slot-scope="slotname">
+			<span v-for="item in slotname.dataname" >{{item}}-</span>
+		</div>
+		```
+
+	- 
+
+
+
