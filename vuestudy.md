@@ -32,6 +32,7 @@ options中可以包含很多的选项：https://cn.vuejs.org/v2/api/
 		```
 	
 - **data：**
+	
 	- 类型：object|Function(组件当中data必须是一个函数)
 	
 	- 作用：Vue实例对应的数据对象
@@ -649,8 +650,6 @@ options中可以包含很多的选项：https://cn.vuejs.org/v2/api/
 			<span v-for="item in slotname.dataname" >{{item}}-</span>
 		</div>
 		```
-
-	- 
 
 
 
