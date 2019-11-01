@@ -36,28 +36,49 @@
 
 - **loader的使用**
 
-	- 不同类型的文件需要加载不同的loader，
+  - 不同类型的文件需要加载不同的loader，
 
-	- 需要在webpack.config.js文件中配置
+  - 需要在webpack.config.js文件中配置
 
-	- ```javascript
-		const path=require('path')
-		
-		module.exports={
-		  entry:'./src/index.js',
-		  output:{
-		    path:path.resolve(__dirname,'dist'),
-		    filename:'bundle.js'
-		  },
-		  module:{
-		    rules:[{
-		      test:/\.css$/,
-		        //从右向左读取loader
-		      use:['style-loader','css-loader']
-		    }]
-		  }
-		}
-		```
+  - ```javascript
+  	const path=require('path')
+  	
+  	module.exports={
+  	  entry:'./src/index.js',
+  	  output:{
+  	    path:path.resolve(__dirname,'dist'),
+  	    filename:'bundle.js',
+  	    publicPath:'dist/'
+  	  },
+  	  module:{
+  	    rules:[
+  	      {
+  	        test:/\.css$/,
+  	        use:['style-loader','css-loader']
+  	      },
+  	      {
+  	        test:/\.less$/,
+  	        use:[
+  	          {loader:"style-loader"},
+  	          {loader:"css-loader"},
+  	          {loader:"less-loader"}
+  	        ]
+  	      },
+  	      {
+  	        test: /\.(png|jpg|gif|jpeg)$/,
+  	        use: [
+  	          {
+  	            loader: 'url-loader',
+  	            options: {
+  	              limit: 8192
+  	            }
+  	          }
+  	        ]
+  	      }
+  	    ]
+  	  }
+  	}
+  	```
 
 - **webpack中配置Vue**
 
