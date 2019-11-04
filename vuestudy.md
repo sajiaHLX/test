@@ -651,5 +651,38 @@ options中可以包含很多的选项：https://cn.vuejs.org/v2/api/
 		</div>
 		```
 
+### vue-cli
 
+- 安装`npm install -g @vue/cli`，拉取旧版本`npm install -g @vue/cli-init`
+
+- 创建一个项目
+
+	- 新版本`vue creat hello-world`
+
+	- 旧版本`vue init webpack hello-world`
+
+	- 接下来就是输入
+
+	- ```
+		项目名称
+		project name
+		项目简介
+		project description
+		作者
+		author
+		选择vue的模式
+		vue build
+		安装vue路由
+		install vue-router
+		使用esLint规范代码
+		use eslint to lint your code
+		选择使用的代码规范
+		pick an eslint preset
+		是否使用单元测试
+		set up unit tests
+		安装nightwatch使用端到端测试
+		setup e2e tests with nightwatch
+		使用npm或者yarn管理
+		should we run 'npm install' for you after the project has been created?
+		```
 
