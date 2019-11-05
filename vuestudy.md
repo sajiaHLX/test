@@ -651,20 +651,18 @@ options中可以包含很多的选项：https://cn.vuejs.org/v2/api/
 		</div>
 		```
 
-### vue-cli
+### vue-cli2
 
 - 安装`npm install -g @vue/cli`，拉取旧版本`npm install -g @vue/cli-init`
 
 - 创建一个项目
 
-	- 新版本`vue creat hello-world`
-
-	- 旧版本`vue init webpack hello-world`
+	- `vue init webpack hello-world`
 
 	- 接下来就是输入
 
 	- ```
-		项目名称
+	项目名称
 		project name
 		项目简介
 		project description
@@ -681,8 +679,36 @@ options中可以包含很多的选项：https://cn.vuejs.org/v2/api/
 		是否使用单元测试
 		set up unit tests
 		安装nightwatch使用端到端测试
-		setup e2e tests with nightwatch
+		setup e2e tests with nightwatch     
 		使用npm或者yarn管理
-		should we run 'npm install' for you after the project has been created?
+		should we run 'npm install' for you after the project has been created?flat
 		```
+
+### vue-cli3
+
+- 创建一个项目
+
+	- `vue create hello-world`
+
+	- ```
+		#选择一个设置（默认还是手动）
+		please pick a preset: 1.default 2.manually select features
+		#选择一些你需要的项目（按空格选择或取消）
+		#check the features needed for your project:
+		babel
+		typescript
+		progressive web-app support  （先进的webapp）
+		pouter
+		vuex
+		css pre-processors （css预处理器）
+		linter / formatter
+		unit testing
+		e2e testing
+		#where do you prefer placing config for babel,postcss,eslint,etc?(你打算把这些东西放在哪里？)
+		in dedicated config files （在一个单独的config文件中）
+		in package.json		(放在package.json中)
+		#save this as a preset for future projects?（将刚才的选择保存，下次创建就不需要再选了）
+		```
+
+
 
