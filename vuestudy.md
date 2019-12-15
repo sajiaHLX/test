@@ -698,7 +698,7 @@ options中可以包含很多的选项：https://cn.vuejs.org/v2/api/
 		babel
 		typescript
 		progressive web-app support  （先进的webapp）
-		pouter
+		Router
 		vuex
 		css pre-processors （css预处理器）
 		linter / formatter

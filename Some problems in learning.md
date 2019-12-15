@@ -1,8 +1,8 @@
-浏览器中报icon的错，在head中加入如下语句即可：
+**浏览器中报icon的错（就是没有找到网站的小图标），在head中加入如下语句即可：**
 
-<link rel="shortcut icon" href="#" />
+- <link rel="shortcut icon" href="#" />
 
-跨域问题在服务器的app.js文件中加上
+**跨域问题在服务器的app.js文件中加上**
 
 ```javascript
 var allowCrossDomain = function(req, res, next) {
@@ -14,4 +14,8 @@ var allowCrossDomain = function(req, res, next) {
 };
 app.use(allowCrossDomain);
 ```
+
+**哪些元素不支持伪元素：**
+
+- text ，submit ，button ， textarea ， select ， img ， iframe
 
