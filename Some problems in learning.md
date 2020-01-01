@@ -19,3 +19,21 @@ app.use(allowCrossDomain);
 
 - text ，submit ，button ， textarea ， select ， img ， iframe
 
+**vuecli3设置代理**
+
+- 在vue.config.js中添加
+
+- ```javascript
+	devServer: {
+	    proxy: {
+	      '/api': {
+	        target: 'http://localhost:3000',
+	        changeOrigin: true,
+	        ws: true,
+	        pathRewrite: {
+	          '^/api': ''
+	        }
+	      }
+	    }
+	  }
+	```
