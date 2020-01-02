@@ -20,6 +20,8 @@
 
 options中可以包含很多的选项：https://cn.vuejs.org/v2/api/
 
+<!--more-->
+
 目前掌握的：
 
 - **el：**

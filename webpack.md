@@ -18,6 +18,9 @@
 
 	- webpack ./src/index.js ./dist/bundle.js
 
+
+<!--more-->
+
 - **webpack的配置**
 
 	- 新建webpack.config.js文件

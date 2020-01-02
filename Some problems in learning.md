@@ -15,6 +15,8 @@ var allowCrossDomain = function(req, res, next) {
 app.use(allowCrossDomain);
 ```
 
+<!--more-->
+
 **哪些元素不支持伪元素：**
 
 - text ，submit ，button ， textarea ， select ， img ， iframe
